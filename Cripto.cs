@@ -10,6 +10,7 @@ namespace Sistemapagamento
     {
         //P paypal C cripto B carta A applepay
 
+        //possibile implementazione di ottenere il valore della criptovaluta da API
         decimal valueInMoney = 1.3m;
 
         public Cripto(string id, int tot, char typeOfPayment) : base(id, tot, typeOfPayment)

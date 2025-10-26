@@ -20,19 +20,17 @@ namespace Sistemapagamento
             TypeOfPayment = typeOfPayment;
         }
 
-        public bool ThereIsSomethingToPay(decimal money)
+        private bool ThereIsSomethingToPay(decimal money)
         {
             return TotMoney - money >= 0;
         }
 
-        public string Pay(decimal money)
+        public void Pay(decimal money)
         {
             if (ThereIsSomethingToPay(money))
             {
                 TotMoney -= money;
-                return this.ToString();
             }
-            return "Saldo insufficiente.";
         }
 
         public override string ToString()

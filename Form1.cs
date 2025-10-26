@@ -301,6 +301,7 @@ namespace Sistemapagamento
             this.Show();
 
             payment.Pay(total);
+            
             MessageBox.Show(payment.ToString());
         }
 
