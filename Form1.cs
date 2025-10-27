@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace Sistemapagamento
 {
@@ -25,6 +26,8 @@ namespace Sistemapagamento
         List<GiveMeMyMoney> payments = new List<GiveMeMyMoney>();
         AllPayments allPayments = new AllPayments();
         decimal total = 0;
+
+        GiveMeMyMoney thisPayment;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -92,6 +95,8 @@ namespace Sistemapagamento
                 payments.Add(card);
                 index++;
 
+                thisPayment = card;
+
                 txt_idCarta.Clear();
                 txt_pinCarta.Clear();
                 txt_emailCarta.Clear();
@@ -125,6 +130,8 @@ namespace Sistemapagamento
                 payments.Add(payPal);
                 index++;
 
+                thisPayment = payPal;
+
                 txt_emailPayPal.Clear();
                 txt_pswPayPal.Clear();
                 num_paypal.Value = 0;
@@ -147,6 +154,7 @@ namespace Sistemapagamento
                 if (rdb_cripto.Checked == true)
                 {
                     element = new Cripto(idWallet, totCripto, 'C');
+
                 }
                 else
                 {
@@ -154,6 +162,8 @@ namespace Sistemapagamento
                 }
                 payments.Add(element);
                 index++;
+
+                thisPayment = element;
 
                 txt_idCripto.Clear();
                 num_saldoCripto.Value = 0;
@@ -166,6 +176,20 @@ namespace Sistemapagamento
         private bool IsEmail(string input)
         {
             string elements = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+            foreach (var paym in payments)
+            {
+                if (paym is IProtected)
+                {
+                    IProtected protectedPayment = (IProtected)paym;
+                    if (input == protectedPayment.Email)
+                    {
+                        MessageBox.Show("Email già in uso");
+                        return false;
+                    }
+                }
+            }
+
             return Regex.IsMatch(input, elements, RegexOptions.IgnoreCase);
         }
 
@@ -224,14 +248,24 @@ namespace Sistemapagamento
                 {
                     string email = fa.Email;
                     string passw = fa.Password;
-                    GiveMeMyMoney payment = payments[index - 1];
-                    if (payment is IProtected)
+
+                    foreach (var paym in payments)
                     {
-                        IProtected protectedPayment = (IProtected)payment;
-                        protectedPayment.Access(email, passw);
-                        if(protectedPayment.isAuthenticated)
+                        if (paym is IProtected)
                         {
-                            allPayments.GetPayments();
+                            IProtected protectedPayment = (IProtected)paym;
+                            if (email == protectedPayment.Email)
+                            {
+                                if(passw == protectedPayment.Password)
+                                {
+                                    protectedPayment.Access(email, passw);
+                                    if (protectedPayment.isAuthenticated)
+                                    {
+                                        allPayments.GetAccess();
+                                        thisPayment = paym;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -244,7 +278,7 @@ namespace Sistemapagamento
 
         private void btn_disconessione_Click(object sender, EventArgs e)
         {
-            GiveMeMyMoney payment = payments[index - 1];
+            GiveMeMyMoney payment = thisPayment;
 
             if (payment is IProtected)
             {
@@ -265,7 +299,7 @@ namespace Sistemapagamento
         {
             if (payments.Count > 0)
             {
-                GiveMeMyMoney payment = payments[index - 1];
+                GiveMeMyMoney payment = thisPayment;
 
                 if (payment is IProtected)
                 {
@@ -313,6 +347,31 @@ namespace Sistemapagamento
             }
         }
 
-        
+        private void btn_visInfo_Click(object sender, EventArgs e)
+        {
+            if(thisPayment != null)
+            {
+                if(thisPayment is IProtected)
+                {
+                    IProtected protectedPayment = (IProtected)thisPayment;
+                    if (protectedPayment.isAuthenticated)
+                    {
+                        MessageBox.Show(thisPayment.GetInfo());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Utente non autenticato. Accedi");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(thisPayment.GetInfo());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nessun pagamento selezionato");
+            }
+        }
     }
 }

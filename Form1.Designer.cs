@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rdb_applePay = new System.Windows.Forms.RadioButton();
             this.rdb_cripto = new System.Windows.Forms.RadioButton();
             this.rdb_carta = new System.Windows.Forms.RadioButton();
             this.rdb_paypal = new System.Windows.Forms.RadioButton();
@@ -59,7 +60,7 @@
             this.btn_insDati = new System.Windows.Forms.Button();
             this.btn_disconessione = new System.Windows.Forms.Button();
             this.btn_accesso = new System.Windows.Forms.Button();
-            this.rdb_applePay = new System.Windows.Forms.RadioButton();
+            this.btn_visInfo = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.pnl_paypal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.num_paypal)).BeginInit();
@@ -81,6 +82,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Seleziona tecnica di pagamento";
+            // 
+            // rdb_applePay
+            // 
+            this.rdb_applePay.AutoSize = true;
+            this.rdb_applePay.Location = new System.Drawing.Point(48, 235);
+            this.rdb_applePay.Name = "rdb_applePay";
+            this.rdb_applePay.Size = new System.Drawing.Size(105, 24);
+            this.rdb_applePay.TabIndex = 7;
+            this.rdb_applePay.TabStop = true;
+            this.rdb_applePay.Text = "Apple Pay";
+            this.rdb_applePay.UseVisualStyleBackColor = true;
+            this.rdb_applePay.CheckedChanged += new System.EventHandler(this.rdb_applePay_CheckedChanged);
             // 
             // rdb_cripto
             // 
@@ -362,9 +375,9 @@
             // 
             // btn_insDati
             // 
-            this.btn_insDati.Location = new System.Drawing.Point(433, 349);
+            this.btn_insDati.Location = new System.Drawing.Point(573, 358);
             this.btn_insDati.Name = "btn_insDati";
-            this.btn_insDati.Size = new System.Drawing.Size(335, 75);
+            this.btn_insDati.Size = new System.Drawing.Size(195, 72);
             this.btn_insDati.TabIndex = 12;
             this.btn_insDati.Text = "INSERISCI INFORMAZIONI";
             this.btn_insDati.UseVisualStyleBackColor = true;
@@ -390,23 +403,22 @@
             this.btn_accesso.UseVisualStyleBackColor = true;
             this.btn_accesso.Click += new System.EventHandler(this.btn_accesso_Click);
             // 
-            // rdb_applePay
+            // btn_visInfo
             // 
-            this.rdb_applePay.AutoSize = true;
-            this.rdb_applePay.Location = new System.Drawing.Point(48, 235);
-            this.rdb_applePay.Name = "rdb_applePay";
-            this.rdb_applePay.Size = new System.Drawing.Size(105, 24);
-            this.rdb_applePay.TabIndex = 7;
-            this.rdb_applePay.TabStop = true;
-            this.rdb_applePay.Text = "Apple Pay";
-            this.rdb_applePay.UseVisualStyleBackColor = true;
-            this.rdb_applePay.CheckedChanged += new System.EventHandler(this.rdb_applePay_CheckedChanged);
+            this.btn_visInfo.Location = new System.Drawing.Point(433, 358);
+            this.btn_visInfo.Name = "btn_visInfo";
+            this.btn_visInfo.Size = new System.Drawing.Size(134, 72);
+            this.btn_visInfo.TabIndex = 16;
+            this.btn_visInfo.Text = "VISUALIZZA INFO";
+            this.btn_visInfo.UseVisualStyleBackColor = true;
+            this.btn_visInfo.Click += new System.EventHandler(this.btn_visInfo_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1492, 450);
+            this.Controls.Add(this.btn_visInfo);
             this.Controls.Add(this.btn_accesso);
             this.Controls.Add(this.btn_disconessione);
             this.Controls.Add(this.btn_insDati);
@@ -467,6 +479,7 @@
         private System.Windows.Forms.Button btn_disconessione;
         private System.Windows.Forms.Button btn_accesso;
         private System.Windows.Forms.RadioButton rdb_applePay;
+        private System.Windows.Forms.Button btn_visInfo;
     }
 }
 

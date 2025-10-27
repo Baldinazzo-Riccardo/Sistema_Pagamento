@@ -33,6 +33,35 @@ namespace Sistemapagamento
             }
         }
 
+        //P paypal C cripto B carta A applepay
+        public string GetInfo()
+        {
+            string info = "";
+            info += $"Metodo Di Pagamento s.r.l.\n";
+            info += $"Data e orario: {DateTime.Today}. \n";
+            info += "---------INFORMAZIONI---------";
+            info += "\n";
+            info += "Metodo di pagamento: ";
+
+            switch (TypeOfPayment)
+            {
+                case 'P':
+                    info += "Paypal";
+                    break;
+                case 'C':
+                    info += "Criptovaluta";
+                    break;
+                case 'B':
+                    info += "Carta di Credito";
+                    break;
+                case 'A':
+                    info += "Apple Pay";
+                    break;
+            }
+            info += $"\n{ID} - Disponibilita' di {TotMoney:C}";
+            return info;
+        }
+
         public override string ToString()
         {
             string str = "";
